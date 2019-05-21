@@ -8,7 +8,5 @@
 import scrapy
 
 
-class BoudyCrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class Bouda(scrapy.Item):
+    nadpis = scrapy.Field()
