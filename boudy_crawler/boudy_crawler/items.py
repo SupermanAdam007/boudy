@@ -9,5 +9,12 @@ import scrapy
 
 
 class Bouda(scrapy.Item):
+    source_url = scrapy.Field()
     nadpis = scrapy.Field()
-    sloupek_okoli = scrapy.Field()
+    okoli = scrapy.Field()
+    main_img = scrapy.Field()
+    info_ik_trida_druh = scrapy.Field()
+    info_pocet = scrapy.Field()
+    info_pocet_max = scrapy.Field()
+    info_ik = scrapy.Field()
+    info_txt = scrapy.Field()
