@@ -10,3 +10,4 @@ import scrapy
 
 class Bouda(scrapy.Item):
     nadpis = scrapy.Field()
+    sloupek_okoli = scrapy.Field()

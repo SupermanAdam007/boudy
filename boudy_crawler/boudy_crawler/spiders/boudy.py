@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import json
+
 from boudy_crawler.items import Bouda
 
 
@@ -18,7 +20,13 @@ class BoudySpider(scrapy.Spider):
     MAX_ID = 1760
 
     def parse(self, response):
-        self.log(f'URL: {response.url}')
         bouda = Bouda()
-        bouda['nadpis'] = response.xpath('/html/body/div/div/div[3]').get()
+        bouda['nadpis'] = response.xpath('/html/body/div/div/div[3]/text()').get()
+        okolis = response.xpath('//div[@class="sloupek_okoli_link"]')
+
+        for okoli in okolis:
+            okoli_id = okoli.xpath('//div/@id').get()
+            self.log(f'okoli_id: {okoli_id}')
+
         yield bouda
+
