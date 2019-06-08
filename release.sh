@@ -33,6 +33,9 @@ git merge --no-ff $releaseBranch
  
 # create tag for new version from -master
 git tag $versionLabel
+
+# push tags to origin
+git push --tags
  
 # merge release branch with the new version number back into develop
 git checkout $devBranch
