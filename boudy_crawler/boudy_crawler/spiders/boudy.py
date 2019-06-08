@@ -15,7 +15,7 @@ class BoudySpider(scrapy.Spider):
     allowed_domains = ['boudy.info']
     BASE_URL = 'http://boudy.info/'
     start_urls = [
-        f'http://boudy.info/bouda.php?txt={Languages.CZ}&id={bouda_id}' 
+        f'http://boudy.info/bouda.php?txt={Languages.CZ}&id={bouda_id}'
         for bouda_id in range(1, 2)]
     MIN_ID = 1
     MAX_ID = 1760
@@ -23,7 +23,8 @@ class BoudySpider(scrapy.Spider):
     def parse(self, response):
         bouda = Bouda()
         bouda['source_url'] = response.url
-        bouda['nadpis'] = response.xpath('/html/body/div/div/div[3]/text()').get().strip()
+        bouda['nadpis'] = response.xpath(
+            '/html/body/div/div/div[3]/text()').get().strip()
 
         okolis = response.xpath('//div[@class="sloupek_okoli_link"]')
         okoli_list = []
@@ -37,11 +38,13 @@ class BoudySpider(scrapy.Spider):
             )
         bouda['okoli'] = okoli_list
 
-        main_img_all = response.xpath('/html/body/div/div/div[6]/div[9]/div[1]/a/img')
+        main_img_all = response.xpath(
+            '/html/body/div/div/div[6]/div[9]/div[1]/a/img')
         main_img = f"{BoudySpider.BASE_URL}{main_img_all.attrib.get('src')}"
         bouda['main_img'] = main_img
 
-        info_ik_trida_druhs = response.xpath('/html/body/div/div/div[6]/div[9]/div[2]/img')
+        info_ik_trida_druhs = response.xpath(
+            '/html/body/div/div/div[6]/div[9]/div[2]/img')
         info_ik_trida_druh_list = []
         for info_ik_trida_druh in info_ik_trida_druhs:
             info_ik_trida_druh_list.append(
@@ -53,8 +56,10 @@ class BoudySpider(scrapy.Spider):
             )
         bouda['info_ik_trida_druh'] = info_ik_trida_druh_list
 
-        bouda['info_pocet'] = int(response.xpath('//div[@class="info_pocet"]/text()').get() or '0')
-        bouda['info_pocet_max'] = int(response.xpath('//div[@class="info_pocet_max"]/text()').get() or '0')
+        bouda['info_pocet'] = int(response.xpath(
+            '//div[@class="info_pocet"]/text()').get() or '0')
+        bouda['info_pocet_max'] = int(response.xpath(
+            '//div[@class="info_pocet_max"]/text()').get() or '0')
 
         info_iks = response.xpath('//img[@class="info_ik"]')
         info_ik_list = []
@@ -67,9 +72,10 @@ class BoudySpider(scrapy.Spider):
             )
         bouda['info_ik'] = info_ik_list
 
-        bouda['info_txt'] = ''.join(response.xpath('//div[@class="info_txt"]/text()').getall()).strip()
-        bouda['info_gps_1'] = response.xpath('//span[@class="info_gps_1"]/text()').get().strip().replace('\n', ' ')
-
+        bouda['info_txt'] = ''.join(response.xpath(
+            '//div[@class="info_txt"]/text()').getall()).strip()
+        bouda['info_gps_1'] = response.xpath(
+            '//span[@class="info_gps_1"]/text()').get().strip().replace('\n', ' ')
 
         yield bouda
 
