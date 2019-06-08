@@ -43,3 +43,9 @@ git merge --no-ff $releaseBranch
  
 # remove release branch
 git branch -d $releaseBranch
+
+# sync remote
+git checkout $masterBranch
+git push
+git checkout $devBranch
+git push
